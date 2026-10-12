@@ -9,7 +9,7 @@ import { allowedModelsForEngine } from "../runs/model-policy";
  * order, `:` or `=`); the remainder is the actual prompt. Model tokens resolve
  * against the target engine's allowed catalog: an exact id wins, otherwise a
  * token that is a unique case-insensitive substring of exactly one allowed id
- * (so `sol` -> gpt-5.6-sol, `sonnet` -> claude-sonnet-5). Ambiguous or unknown
+ * (so `terra` -> gpt-5.6-terra, `sonnet` -> claude-sonnet-5). Ambiguous or unknown
  * tokens resolve to null and the caller replies with the catalog instead of
  * guessing.
  */
