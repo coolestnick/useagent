@@ -5,7 +5,7 @@ import { allowedModelsForEngine } from "../runs/model-policy";
 /**
  * In-message engine/model directives for the Slack surface.
  *
- * A message may START with `model:sol` and/or `engine:opencode` tokens (either
+ * A message may START with `model:terra` and/or `engine:opencode` tokens (either
  * order, `:` or `=`); the remainder is the actual prompt. Model tokens resolve
  * against the target engine's allowed catalog: an exact id wins, otherwise a
  * token that is a unique case-insensitive substring of exactly one allowed id
