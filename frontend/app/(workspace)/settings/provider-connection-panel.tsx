@@ -91,7 +91,10 @@ export function ProviderConnectionPanel({
   const rejectedNotice = rejectedKeyNotice(connection, labels.name);
 
   return (
-    <section className="rounded-xl border border-border-button-default bg-background-secondary-default px-4">
+    <section
+      data-tour-target={`provider-${provider}`}
+      className="rounded-xl border border-border-button-default bg-background-secondary-default px-4"
+    >
       {/* Header row */}
       <div className="flex items-center justify-between gap-3 border-b border-separator-border py-3">
         <div className="flex min-w-0 items-center gap-2">

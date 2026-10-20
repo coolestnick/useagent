@@ -56,6 +56,7 @@ import { BeautifulUiExtras } from "./beautiful-ui-extras";
 import { BeuiAgentShowcase } from "./beui-agent-showcase";
 import { ComposerRetrievalShowcase } from "./composer-retrieval-showcase";
 import { ModelPickerShowcase } from "./model-picker-showcase";
+import { ProductTourShowcase } from "./product-tour-showcase";
 import { TimelineShowcase } from "./session-ui-showcase";
 
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
@@ -322,6 +323,10 @@ export function ComponentLab() {
               </Modal.Footer>
             </Modal.Content>
           </Modal.Root>
+        </Section>
+
+        <Section label="Product tour - offer and step cards">
+          <ProductTourShowcase />
         </Section>
 
         {/* Motion primitives */}

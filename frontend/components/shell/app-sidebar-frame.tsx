@@ -119,7 +119,11 @@ export function NavRoutes({ routes }: { routes: Route[] }) {
       {routes.map((route) => {
         const Icon = route.icon;
         return (
-          <SidebarMenuItem key={route.id} className={cn(isCollapsed && "w-8")}>
+          <SidebarMenuItem
+            key={route.id}
+            data-tour-target={`nav-${route.id}`}
+            className={cn(isCollapsed && "w-8")}
+          >
             {!isCollapsed && route.subs?.length ? (
               <NavGroup route={route} />
             ) : isCollapsed ? (
@@ -178,7 +182,7 @@ export function UserFooter() {
 
   return (
     <SidebarMenu>
-      <SidebarMenuItem>
+      <SidebarMenuItem data-tour-target="account">
         <UserMenu
           trigger={({ name, email, image }) => (
             <span
