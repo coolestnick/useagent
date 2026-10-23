@@ -3,7 +3,7 @@
 import { lazy, Suspense, useSyncExternalStore } from "react";
 import { subscribeTour, tourServerSnapshot, tourSnapshot } from "@/lib/product-tour";
 
-/** The cards and highlight load only when the tour is offered or running, so
+/** The invitation and modal load only when the tour is offered or running, so
  *  the shell's first load carries none of it for everyone else. */
 const ProductTourOverlay = lazy(() =>
   import("./product-tour-overlay").then((mod) => ({ default: mod.ProductTourOverlay })),
@@ -15,7 +15,7 @@ export function ProductTour() {
   if (state.phase === "idle") return null;
   return (
     <Suspense fallback={null}>
-      <ProductTourOverlay state={state} />
+      <ProductTourOverlay key={`${state.phase}:${state.userId}`} state={state} />
     </Suspense>
   );
 }

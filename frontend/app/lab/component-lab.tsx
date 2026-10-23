@@ -325,7 +325,7 @@ export function ComponentLab() {
           </Modal.Root>
         </Section>
 
-        <Section label="Product tour - offer and step cards">
+        <Section label="Product tour - invitation and introduction">
           <ProductTourShowcase />
         </Section>
 

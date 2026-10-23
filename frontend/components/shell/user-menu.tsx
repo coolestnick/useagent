@@ -174,7 +174,7 @@ function UserMenuView({
   workspacesLoaded?: boolean;
   /** The active workspace is still on its first run: offer the page the landing redirect may have stood aside from. */
   setupPending?: boolean;
-  /** Restarts the product tour on the composer page; absent when signed out. */
+  /** Restarts the product tour on the current page; absent when signed out. */
   onStartTour?: () => void;
   workspaceAccessError?: string | null;
   onSelectWorkspace?: (organization: string) => Promise<void>;
@@ -283,10 +283,7 @@ function UserMenuView({
           <DropdownMenuItem
             id="tour"
             textValue="Take the tour"
-            onAction={() => {
-              onStartTour();
-              go("/agent/new");
-            }}
+            onAction={onStartTour}
           >
             <RiCompass3Line className="size-5 shrink-0 text-foreground-icon-secondary" aria-hidden />
             <span className="text-body-2-medium">Take the tour</span>

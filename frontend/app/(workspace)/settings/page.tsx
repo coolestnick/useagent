@@ -47,7 +47,6 @@ function Section({
   return (
     <section
       id={id}
-      data-tour-target={`settings-${id}`}
       style={{
         scrollMarginTop: `var(--settings-anchor-offset, ${SETTINGS_ACTIVATION_RATIO * 100}vh)`,
       }}

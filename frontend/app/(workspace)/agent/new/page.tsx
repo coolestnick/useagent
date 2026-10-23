@@ -97,7 +97,7 @@ export default async function NewTaskPage({
             <h1 className="text-display-xs text-text-primary">What do you want done?</h1>
           </div>
 
-          <div className="mt-8" data-tour-target="composer">
+          <div className="mt-8">
             <FirstRunNotice />
             <NewTaskComposer
               skills={skills}
