@@ -33,6 +33,7 @@ import { StatusDot } from "@/components/base/badges/status-dot";
 import { Button } from "@/components/base/buttons/button";
 import { IconButton } from "@/components/base/buttons/icon-button";
 import { Input } from "@/components/base/input/input";
+import * as Modal from "@/components/base/modal/modal";
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -49,8 +50,9 @@ import {
 } from "@/components/base/table/table";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/base/tabs/tabs";
 import { type OrbState, ThinkingOrb } from "@/components/base/thinking-orb";
+import { GatewayApprovalCard } from "@/components/chat/gateway-approval-card";
+import { NativeApprovalCard } from "@/components/chat/native-approval-card";
 import { AsteriskMark } from "@/components/foundations/brand/asterisk-mark";
-import * as Modal from "@/components/base/modal/modal";
 import { ARTIFACT_CAPABILITY_ROWS } from "./artifact-capability-matrix";
 import { BeautifulUiExtras } from "./beautiful-ui-extras";
 import { BeuiAgentShowcase } from "./beui-agent-showcase";
@@ -96,7 +98,9 @@ export function ComponentLab() {
           <AsteriskMark className="size-8 text-text-primary" />
           <div className="flex flex-col">
             <span className="text-headline-medium text-text-primary">Component lab</span>
-            <span className="text-mono-label text-text-tertiary">UseAgent · Base kit parts bin</span>
+            <span className="text-mono-label text-text-tertiary">
+              UseAgent · Base kit parts bin
+            </span>
           </div>
         </div>
       </header>
@@ -192,12 +196,7 @@ export function ComponentLab() {
               leadingIcon={RiSearch2Line}
               placeholder="Search agents, runs, skills…"
             />
-            <Input
-              className="flex-1"
-              isInvalid
-              placeholder="Invalid input"
-              defaultValue="oops"
-            />
+            <Input className="flex-1" isInvalid placeholder="Invalid input" defaultValue="oops" />
           </div>
         </Section>
 
@@ -332,7 +331,9 @@ export function ComponentLab() {
         {/* Motion primitives */}
         <Section label="Brand motion primitives">
           <div className="flex flex-col gap-4">
-            <p className="agent-progress-loading-text text-body-medium">Thinking through the plan…</p>
+            <p className="agent-progress-loading-text text-body-medium">
+              Thinking through the plan…
+            </p>
             <p className="text-body-2-medium text-text-primary">
               Streaming output
               <span
@@ -479,6 +480,46 @@ export function ComponentLab() {
             onApprove={() => {}}
             onDeny={() => {}}
           />
+        </Section>
+
+        <Section label="Chat · Approval cards (one shell, two lanes)">
+          <div className="flex flex-col gap-3">
+            <NativeApprovalCard
+              request={{
+                id: "lab-native",
+                sessionId: "lab",
+                requestKind: "command",
+                detail: "rm -rf ./dist && bun run build",
+              }}
+              submitting={false}
+              error={null}
+              onRespond={() => {}}
+            />
+            <GatewayApprovalCard
+              approval={{
+                id: "lab-gateway-pending",
+                runId: "lab",
+                toolName: "deploy_service",
+                arguments: { service: "billing", command: "deploy --prod" },
+                status: "pending",
+                requestedAt: new Date().toISOString(),
+                resolvedAt: null,
+                resolvedBy: null,
+              }}
+            />
+            <GatewayApprovalCard
+              approval={{
+                id: "lab-gateway-approved",
+                runId: "lab",
+                toolName: "deploy_service",
+                arguments: { service: "billing" },
+                status: "approved",
+                requestedAt: new Date(Date.now() - 60_000).toISOString(),
+                resolvedAt: new Date().toISOString(),
+                resolvedBy: "dana",
+              }}
+            />
+          </div>
         </Section>
 
         <Section label="AI kit · Context cards">
