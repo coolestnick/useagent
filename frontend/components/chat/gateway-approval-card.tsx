@@ -2,13 +2,14 @@
 
 // Gateway approval container (#77, unified in #351): the human side of the
 // approval lane. Supplies the run context (tool name, one-level argument
-// summary, status) to the shared ApprovalShell and wires Approve / Deny to
+// summary, status) to the shared ApprovalCard and wires Approve / Deny to
 // lib/gateway-approvals.ts with an optimistic pending -> resolved transition
 // that rolls back on API failure. The denial reason is captured only after the
 // user chooses to deny, then carried to the agent when the decision continues
 // the thread.
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { type ApprovalAction, ApprovalCard } from "@/components/ai/approval-card";
 import { Input } from "@/components/base/input/input";
 import {
   type GatewayApproval,
@@ -17,7 +18,6 @@ import {
   type GatewayApprovalStatus,
   resolveGatewayApproval,
 } from "@/lib/gateway-approvals";
-import { type ApprovalAction, ApprovalShell } from "./approval-shell";
 import {
   type ApprovalResolution,
   beginResolution,
@@ -73,6 +73,13 @@ export function GatewayApprovalCard({
   // The reason is only entered after the user chooses to deny.
   const [denying, setDenying] = useState(false);
   const [reason, setReason] = useState("");
+  const reasonRef = useRef<HTMLInputElement>(null);
+
+  // Opening the deny flow unmounts the Deny button that had focus; move focus
+  // to the reason box so the shortcuts keep working and the user can type.
+  useEffect(() => {
+    if (denying) reasonRef.current?.focus();
+  }, [denying]);
   const status = effectiveStatus(approval.status, resolution);
   const error = resolution.phase === "idle" ? resolution.error : null;
   const entries = summarizeApprovalArguments(approval.arguments);
@@ -133,7 +140,7 @@ export function GatewayApprovalCard({
         ];
 
   return (
-    <ApprovalShell
+    <ApprovalCard
       testId="gateway-approval-card"
       ariaLabel={`Approval for ${approval.toolName}`}
       title={
@@ -143,7 +150,7 @@ export function GatewayApprovalCard({
       }
       subtitle={requestedAt ? `Requested ${requestedAt}` : undefined}
       chip={badge}
-      autoFocus
+      autoFocus={pending}
       busy={submitting}
       approveActionId={denying ? "confirm-deny" : "approve"}
       rejectActionId={denying ? "cancel-deny" : "deny"}
@@ -171,6 +178,7 @@ export function GatewayApprovalCard({
       reason={
         pending && denying ? (
           <Input
+            ref={reasonRef}
             size="small"
             aria-label="Reason for denying"
             placeholder="Reason, if you want to add one (optional)"

@@ -1,9 +1,11 @@
 import { describe, expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { type ApprovalAction, ApprovalShell, approvalShortcut } from "./approval-shell";
+import { type ApprovalAction, ApprovalCard, approvalShortcut } from "./approval-card";
 
 // The keyboard contract is pure, so it is locked here without a DOM: every
-// shortcut the shell binds, and every press that is NOT a shortcut.
+// shortcut the card binds, and every press that is NOT a shortcut. The
+// interaction half (real key presses, focus, the two-step deny) lives in
+// approval-card.interaction.test.tsx.
 describe("approvalShortcut", () => {
   const noMods = { ctrl: false, meta: false };
 
@@ -31,10 +33,10 @@ const ACTIONS: ApprovalAction[] = [
   { id: "approve", label: "Approve", tone: "primary", onSelect: () => {} },
 ];
 
-const render = (props: Partial<Parameters<typeof ApprovalShell>[0]> = {}) =>
+const render = (props: Partial<Parameters<typeof ApprovalCard>[0]> = {}) =>
   renderToStaticMarkup(
-    <ApprovalShell
-      testId="shell-under-test"
+    <ApprovalCard
+      testId="card-under-test"
       ariaLabel="Approval"
       title="Tool approval: deploy"
       actions={ACTIONS}
@@ -44,10 +46,10 @@ const render = (props: Partial<Parameters<typeof ApprovalShell>[0]> = {}) =>
     />,
   );
 
-describe("ApprovalShell", () => {
+describe("ApprovalCard", () => {
   test("pending renders the title, actions, and a focusable group", () => {
     const html = render();
-    expect(html).toContain('data-testid="shell-under-test"');
+    expect(html).toContain('data-testid="card-under-test"');
     expect(html).toContain('role="group"');
     expect(html).toContain('aria-label="Approval"');
     expect(html).toContain(">Deny<");

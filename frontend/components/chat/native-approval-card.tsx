@@ -2,12 +2,12 @@
 
 // Provider-native approval container (unified in #351): the human side of the
 // engine-native approval lane (OpenCode/Codex/Pi `approval.*` frames). It
-// supplies the request context to the shared ApprovalShell and wires the four
+// supplies the request context to the shared ApprovalCard and wires the four
 // native decisions - Approve once, Always allow this session, Decline, Cancel
 // turn - to the session's onRespond. These cards carry no status: the lane
 // removes them on resolution (see approval-state.selectPendingApproval).
 
-import { type ApprovalAction, ApprovalShell } from "./approval-shell";
+import { type ApprovalAction, ApprovalCard } from "@/components/ai/approval-card";
 import type { ApprovalDecision, PendingApproval } from "./approval-state";
 
 const ACTION_PHRASE: Record<PendingApproval["requestKind"], string> = {
@@ -48,7 +48,7 @@ export function NativeApprovalCard({
   ];
 
   return (
-    <ApprovalShell
+    <ApprovalCard
       testId="native-approval-card"
       ariaLabel={`Approval required to ${ACTION_PHRASE[request.requestKind]}`}
       title={`Approval required to ${ACTION_PHRASE[request.requestKind]}`}
