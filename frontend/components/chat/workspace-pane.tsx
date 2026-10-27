@@ -92,7 +92,7 @@ export function WorkpieceTabStrip({
               type="button"
               onClick={() => onSelect(tab.id)}
               aria-current={active}
-              className="flex h-7 min-w-0 items-center gap-1.5 outline-none"
+              className="flex h-7 min-w-0 items-center gap-1.5 rounded outline-none focus-visible:ring-2 focus-visible:ring-border-focus-ring"
             >
               {unseen ? (
                 <>
@@ -109,7 +109,7 @@ export function WorkpieceTabStrip({
               onClick={() => onClose(tab.id)}
               aria-label={`Close ${tab.name}`}
               title="Close"
-              className="grid size-5 place-items-center rounded text-foreground-icon-tertiary hover:bg-background-tertiary-default hover:text-text-primary"
+              className="grid size-5 place-items-center rounded text-foreground-icon-tertiary hover:bg-background-tertiary-default hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus-ring"
             >
               <RiCloseLine aria-hidden className="size-3.5" />
             </button>
@@ -306,7 +306,7 @@ function WorkpieceEditorView({
       />
       {editor.actionContract.edit && (
         <details className="shrink-0 border-t border-border-button-default px-3 py-1.5">
-          <summary className="cursor-pointer text-caption-1-medium text-text-secondary outline-none marker:text-text-tertiary hover:text-text-primary">
+          <summary className="cursor-pointer rounded text-caption-1-medium text-text-secondary outline-none marker:text-text-tertiary hover:text-text-primary focus-visible:ring-2 focus-visible:ring-border-focus-ring">
             What edits are preserved
           </summary>
           <div className="pt-2">
